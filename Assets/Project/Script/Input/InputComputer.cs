@@ -9,6 +9,9 @@ namespace Polygon
         public InputComputer(InputController action)
         {
             this.action = action;
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         public Vector2 GetMove()

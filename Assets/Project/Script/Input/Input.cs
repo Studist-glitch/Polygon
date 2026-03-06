@@ -14,7 +14,7 @@ namespace Polygon
         {
             action = new InputController();
             device = SystemInfo.deviceType == DeviceType.Desktop || SystemInfo.deviceType == DeviceType.Console ? new InputComputer(action) : new InputPhone(action);
-
+            
             StartCoroutine(InputUpdate());
         }
 
@@ -28,6 +28,7 @@ namespace Polygon
             {
                 controller.Move(device.GetMove());
                 //controller.Look(device.GetLook());
+                yield return null;
             }
         }
     }
