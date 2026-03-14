@@ -13,8 +13,9 @@ namespace Polygon
         private void Start()
         {
             action = new InputController();
-            device = SystemInfo.deviceType == DeviceType.Desktop || SystemInfo.deviceType == DeviceType.Console ? new InputComputer(action) : new InputPhone(action);
-            
+            device = (SystemInfo.deviceType == DeviceType.Desktop || SystemInfo.deviceType == DeviceType.Console) ? new InputComputer(action, controller) : new InputPhone(action, controller);
+            action?.Enable();
+
             StartCoroutine(InputUpdate());
         }
 

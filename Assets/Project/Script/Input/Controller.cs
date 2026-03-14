@@ -5,6 +5,7 @@ namespace Polygon
 {
     public class Controller : MonoBehaviour
     {
+        [SerializeField] private ControllerCollision collision;
         [SerializeField] private new Transform camera;
         [SerializeField] private Rigidbody rig;
 
@@ -18,6 +19,7 @@ namespace Polygon
         [SerializeField] private float lermMultiplier = 7f;
 
         public float CurrentSpeed { get; private set; }
+        public bool IsGround => collision.ContactCollision.Count > 0;
         private Vector2 moveVector;
 
         public bool IsRunning(Vector2 direction) 
@@ -33,6 +35,11 @@ namespace Polygon
             CurrentSpeed = Mathf.Lerp(CurrentSpeed, IsRunning(direction) ? runSpeed : walkSpeed, Time.deltaTime * 3);
         }
 
+        public void Jump()
+        {
+            if (IsGround) rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+
         private void FixedUpdate()
         {
             Vector3 camForward = camera.forward;
@@ -43,7 +50,7 @@ namespace Polygon
 
             Vector2 moveInput = new(moveVector.x, moveVector.y);
             Vector2 moveDir = (camForwardNorm * moveInput.y + camRightNorm * moveInput.x) * CurrentSpeed;
-
+            
             rig.velocity = Vector3.Lerp(rig.velocity, new(moveDir.x, rig.velocity.y, moveDir.y), Time.fixedDeltaTime * moveAcceleration);
             
             if (camForward.sqrMagnitude > 0.001f)

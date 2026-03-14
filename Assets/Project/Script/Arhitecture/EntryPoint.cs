@@ -4,7 +4,7 @@ namespace Polygon
 {
     public class EntryPoint : MonoBehaviour
     {
-        void Start()
+        private void Start()
         {
             
         }

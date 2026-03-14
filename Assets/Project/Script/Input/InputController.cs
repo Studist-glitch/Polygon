@@ -124,7 +124,7 @@ public partial class @InputController: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""e61d8d6e-cc9e-42eb-b84e-7c14d0e886db"",
-                    ""path"": ""2DVector(mode=1)"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
