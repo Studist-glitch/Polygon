@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private Transform target;
     [SerializeField] private NavMeshAgent agent;
-
+    
     private void Start()
     {
         target = FindFirstObjectByType<Controller>(FindObjectsInactive.Include).transform;

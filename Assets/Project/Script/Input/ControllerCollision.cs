@@ -10,10 +10,6 @@ namespace Polygon
         public List<string> ContactCollision {get; private set;} = new();
         public List<string> GroundTags;
 
-        [Space]
-        [SerializeField] private ParticleSystem damageParticle;
-        public List<string> DamageTags;
-
         private void OnCollisionEnter(Collision collision)
         {
             string tag = collision.collider.tag;
@@ -22,11 +18,6 @@ namespace Polygon
             {
                 ContactCollision.Add(collision.collider.tag);
                 controllerPhysical.PhysicMaterial(true);
-            }
-            else if (DamageTags.Contains(tag))
-            {
-                damageParticle.Clear();
-                damageParticle.Play();
             }
         }
 

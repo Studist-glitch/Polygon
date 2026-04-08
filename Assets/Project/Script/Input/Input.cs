@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Polygon
 {
@@ -9,12 +10,16 @@ namespace Polygon
         private IInputDevice device;
 
         [SerializeField] private Controller controller;
+        [SerializeField] private AnimController animator;
 
         private void Start()
         {
             action = new InputController();
             device = (SystemInfo.deviceType == DeviceType.Desktop || SystemInfo.deviceType == DeviceType.Console) ? new InputComputer(action, controller) : new InputPhone(action, controller);
             action?.Enable();
+
+            action.Player.Attack.started += StartAttack;
+            action.Player.Attack.canceled += CancelAttack;
 
             StartCoroutine(InputUpdate());
         }
@@ -31,6 +36,16 @@ namespace Polygon
                 //controller.Look(device.GetLook());
                 yield return null;
             }
+        }
+
+        private void StartAttack(InputAction.CallbackContext context)
+        {
+            animator.SetAttack(true);
+        }
+
+        private void CancelAttack(InputAction.CallbackContext context)
+        {
+            animator.SetAttack(false);
         }
     }
 }

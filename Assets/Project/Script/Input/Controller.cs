@@ -6,8 +6,8 @@ namespace Polygon
     public class Controller : MonoBehaviour
     {
         [SerializeField] private ControllerCollision collision;
-        [SerializeField] private new Transform camera;
         [SerializeField] private Rigidbody rig;
+        private new Transform camera;
 
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
@@ -21,6 +21,11 @@ namespace Polygon
         public float CurrentSpeed { get; private set; }
         public bool IsGround => collision.ContactCollision.Count > 0;
         private Vector2 moveVector;
+
+        private void Start()
+        {
+            camera = FindFirstObjectByType<Camera>().transform;
+        }
 
         public bool IsRunning(Vector2 direction) 
         { 
