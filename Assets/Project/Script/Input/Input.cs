@@ -8,11 +8,12 @@ namespace Polygon
     {
         private InputController action;
         private IInputDevice device;
+        private PlayerHealth health;
 
         [SerializeField] private Controller controller;
         [SerializeField] private AnimController animator;
 
-        private void Start()
+        public void Init(PlayerHealth health)
         {
             action = new InputController();
             device = (SystemInfo.deviceType == DeviceType.Desktop || SystemInfo.deviceType == DeviceType.Console) ? new InputComputer(action, controller) : new InputPhone(action, controller);
@@ -21,12 +22,27 @@ namespace Polygon
             action.Player.Attack.started += StartAttack;
             action.Player.Attack.canceled += CancelAttack;
 
+            health.DeathReceived += OnDeathReceived;
+
             StartCoroutine(InputUpdate());
+        }
+
+        private void OnDeathReceived()
+        {
+            OnDisable();
+            
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         private void OnEnable() => action?.Enable();
         private void OnDisable() => action?.Disable();
-        private void OnDestroy() => action?.Dispose();
+        private void OnDestroy()
+        {
+            action?.Dispose();
+
+            if (health != null) health.DeathReceived -= OnDeathReceived;
+        }
 
         private IEnumerator InputUpdate()
         {

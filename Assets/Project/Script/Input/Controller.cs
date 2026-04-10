@@ -22,9 +22,9 @@ namespace Polygon
         public bool IsGround => collision.ContactCollision.Count > 0;
         private Vector2 moveVector;
 
-        private void Start()
+        public void Init(Camera camera)
         {
-            camera = FindFirstObjectByType<Camera>().transform;
+            this.camera = camera.transform;
         }
 
         public bool IsRunning(Vector2 direction) 
